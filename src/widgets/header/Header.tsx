@@ -3,6 +3,7 @@ import styles from './Header.module.scss';
 import { CiShop } from 'react-icons/ci';
 import { FaPen } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { login } from '../../features/firebase';
 
 const Header = () => {
     return (
@@ -17,7 +18,7 @@ const Header = () => {
                 <Link to={'/products/new'}>
                     <FaPen />
                 </Link>
-                <button>Login</button>
+                <button onClick={() => login()}>Login</button>
             </div>
         </div>
     );
