@@ -1,11 +1,38 @@
-import React from 'react';
 import styles from './Header.module.scss';
 import { CiShop } from 'react-icons/ci';
 import { FaPen } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import { login } from '../../features/firebase';
+import { login, logout, onUserStateChange } from '../../features/auth/Auth';
+import useUserStore from '../../entities/user/UserStore';
+import { useEffect } from 'react';
 
 const Header = () => {
+    const userState = useUserStore((state) => state.user);
+    const updateUser = useUserStore((state) => state.updateUser);
+
+    useEffect(() => {
+        onUserStateChange((user) => {
+            const updated = {
+                name: user?.displayName ?? '',
+                uid: user?.uid,
+            };
+            updateUser(updated);
+        });
+    }, []);
+
+    const handleLogin = () => {
+        login().then((data) => {
+            const updated = {
+                name: data?.displayName ?? '',
+                uid: data?.uid,
+            };
+            updateUser(updated);
+        });
+    };
+
+    const handleLogout = () => {
+        logout().then((result) => result && updateUser(null));
+    };
     return (
         <div className={styles.header}>
             <Link to="/" className={styles.logo}>
@@ -18,7 +45,8 @@ const Header = () => {
                 <Link to={'/products/new'}>
                     <FaPen />
                 </Link>
-                <button onClick={() => login()}>Login</button>
+                {!userState && <button onClick={handleLogin}>Login</button>}
+                {userState && <button onClick={handleLogout}>Logout</button>}
             </div>
         </div>
     );
