@@ -7,6 +7,7 @@ import NewProducts from '../../shared/products/NewProducts';
 import AllProducts from '../../shared/products/AllProducts';
 import CartsPage from '../../pages/carts/CartsPage';
 import ProductDetail from '../../shared/products/ProductDetail';
+import PermissionRoute from './PermissionRoute';
 
 const router = createBrowserRouter([
     {
@@ -22,12 +23,17 @@ const router = createBrowserRouter([
                 element: <ProductsPage />,
                 errorElement: <ErrorPage />,
                 children: [
-                    { index: true, element: <AllProducts />, errorElement: <ErrorPage /> },
-                    { path: 'new', element: <NewProducts />, errorElement: <ErrorPage /> },
-                    { path: ':id', element: <ProductDetail />, errorElement: <ErrorPage /> },
+                    { index: true, element: <AllProducts /> },
+                    {
+                        // 관리자 권한만 접근 가능
+                        element: <PermissionRoute requireAdmin={true} />,
+                        children: [{ path: 'new', element: <NewProducts /> }],
+                    },
+                    { path: ':id', element: <ProductDetail /> },
                 ],
             },
-            { path: 'carts', element: <CartsPage />, errorElement: <ErrorPage /> },
+            // 로그인한 사용자만 접근 가능
+            { element: <PermissionRoute />, children: [{ path: 'carts', element: <CartsPage /> }] },
         ],
     },
     // { path: '/error/:code', element: <ErrorPage /> },

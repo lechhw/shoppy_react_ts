@@ -1,18 +1,20 @@
-import React from 'react';
 import { create } from 'zustand';
+import { UserType } from '../../types/UserTypes';
 
-interface UserType {
-    user: { name?: string; uid?: string } | null;
-    updateUser: (data: { name?: string; uid?: string } | null) => void;
+interface UserStoreType {
+    user: UserType;
+    updateUser: (data: UserType) => void;
 }
 
-const useUserStore = create<UserType>((set) => ({
-    user: {},
+const useUserStore = create<UserStoreType>((set) => ({
+    user: null,
     updateUser: (data) => {
         set(() => ({
             user: data,
         }));
     },
 }));
+
+// useUserStore.subscribe((state) => console.log('오잉', state));
 
 export default useUserStore;

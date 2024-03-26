@@ -5,34 +5,16 @@ import { Link } from 'react-router-dom';
 import { login, logout, onUserStateChange } from '../../features/auth/Auth';
 import useUserStore from '../../entities/user/UserStore';
 import { useEffect } from 'react';
+import User from '../../shared/user/User';
+import Button from '../../shared/ui/button/Button';
 
 const Header = () => {
-    const userState = useUserStore((state) => state.user);
-    const updateUser = useUserStore((state) => state.updateUser);
+    const { user, updateUser } = useUserStore();
 
     useEffect(() => {
-        onUserStateChange((user) => {
-            const updated = {
-                name: user?.displayName ?? '',
-                uid: user?.uid,
-            };
-            updateUser(updated);
-        });
+        onUserStateChange((user) => updateUser(user));
     }, []);
 
-    const handleLogin = () => {
-        login().then((data) => {
-            const updated = {
-                name: data?.displayName ?? '',
-                uid: data?.uid,
-            };
-            updateUser(updated);
-        });
-    };
-
-    const handleLogout = () => {
-        logout().then((result) => result && updateUser(null));
-    };
     return (
         <div className={styles.header}>
             <Link to="/" className={styles.logo}>
@@ -41,12 +23,20 @@ const Header = () => {
             </Link>
             <div className={styles.linkWrap}>
                 <Link to={'/products'}>Products</Link>
-                <Link to={'/carts'}>Carts</Link>
-                <Link to={'/products/new'}>
-                    <FaPen />
-                </Link>
-                {!userState && <button onClick={handleLogin}>Login</button>}
-                {userState && <button onClick={handleLogout}>Logout</button>}
+
+                {user && (
+                    <>
+                        <Link to={'/carts'}>Carts</Link>
+                        {user.isAdmin && (
+                            <Link to={'/products/new'}>
+                                <FaPen />
+                            </Link>
+                        )}
+                        <User user={user} />
+                    </>
+                )}
+                {!user && <Button text="Login" onClick={login} />}
+                {user && <Button text="Logout" onClick={logout} />}
             </div>
         </div>
     );
