@@ -6,8 +6,10 @@ interface UserStoreType {
     updateUser: (data: UserType) => void;
 }
 
+const userInfo = JSON.parse(localStorage.getItem('user') ?? '');
+
 const useUserStore = create<UserStoreType>((set) => ({
-    user: null,
+    user: { displayName: userInfo?.displayName, photoURL: userInfo?.photoURL, uid: userInfo?.uid, isAdmin: userInfo?.isAdmin },
     updateUser: (data) => {
         set(() => ({
             user: data,

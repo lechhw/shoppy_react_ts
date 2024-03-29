@@ -1,18 +1,21 @@
 import styles from './Header.module.scss';
 import { CiShop } from 'react-icons/ci';
-import { FaPen } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { login, logout, onUserStateChange } from '../../features/auth/Auth';
 import useUserStore from '../../entities/user/UserStore';
 import { useEffect } from 'react';
 import User from '../../shared/user/User';
-import Button from '../../shared/ui/button/Button';
+import { Button } from 'antd';
+import { SettingFilled } from '@ant-design/icons';
 
 const Header = () => {
     const { user, updateUser } = useUserStore();
 
     useEffect(() => {
-        onUserStateChange((user) => updateUser(user));
+        onUserStateChange((user) => {
+            updateUser(user);
+            localStorage.setItem('user', JSON.stringify(user));
+        });
     }, []);
 
     return (
@@ -22,21 +25,37 @@ const Header = () => {
                 <h1>Shoppy</h1>
             </Link>
             <div className={styles.linkWrap}>
-                <Link to={'/products'}>Products</Link>
+                <Link to={'/products'}>
+                    <Button type="link" className={styles.linkBtn}>
+                        Products
+                    </Button>
+                </Link>
 
                 {user && (
                     <>
-                        <Link to={'/carts'}>Carts</Link>
+                        <Link to={'/carts'}>
+                            <Button type="link" className={styles.linkBtn}>
+                                Carts
+                            </Button>
+                        </Link>
                         {user.isAdmin && (
                             <Link to={'/products/new'}>
-                                <FaPen />
+                                <Button type="link" icon={<SettingFilled />} className={styles.linkBtn}></Button>
                             </Link>
                         )}
                         <User user={user} />
                     </>
                 )}
-                {!user && <Button text="Login" onClick={login} />}
-                {user && <Button text="Logout" onClick={logout} />}
+                {!user && (
+                    <Button type="primary" size="small" onClick={login}>
+                        Login
+                    </Button>
+                )}
+                {user && (
+                    <Button type="primary" size="small" onClick={logout}>
+                        Logout
+                    </Button>
+                )}
             </div>
         </div>
     );

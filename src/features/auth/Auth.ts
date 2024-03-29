@@ -16,6 +16,7 @@ const login = () => {
 
 const logout = () => {
     signOut(auth).catch(console.error);
+    localStorage.removeItem('user');
 };
 
 const onUserStateChange = (callback: (user: UserType) => void) => {

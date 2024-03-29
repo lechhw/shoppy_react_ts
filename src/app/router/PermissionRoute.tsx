@@ -7,8 +7,7 @@ interface OwnProps {
 
 const PermissionRoute = ({ requireAdmin }: OwnProps) => {
     const userState = useUserStore((state) => state.user);
-
-    return requireAdmin && userState?.isAdmin ? <Outlet /> : userState !== null ? <Outlet /> : <Navigate to="/" replace />;
+    return requireAdmin && userState?.isAdmin ? <Outlet /> : userState?.uid ? <Outlet /> : <Navigate to="/" replace />;
 };
 
 export default PermissionRoute;

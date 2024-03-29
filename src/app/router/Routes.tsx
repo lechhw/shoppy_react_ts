@@ -3,15 +3,16 @@ import ErrorPage from '../../pages/error/ErrorPage';
 import BaseLayout from '../layout/BaseLayout';
 import HomePage from '../../pages/home/HomePage';
 import ProductsPage from '../../pages/products/ProductsPage';
-import NewProducts from '../../shared/products/NewProducts';
-import AllProducts from '../../shared/products/AllProducts';
+import NewProducts from '../../shared/products/new/NewProducts';
+import AllProducts from '../../shared/products/all/AllProducts';
 import CartsPage from '../../pages/carts/CartsPage';
-import ProductDetail from '../../shared/products/ProductDetail';
+import ProductDetail from '../../shared/products/detail/ProductDetail';
 import PermissionRoute from './PermissionRoute';
 
 const router = createBrowserRouter([
     {
         path: '/',
+
         element: <BaseLayout />,
         errorElement: <ErrorPage />,
         children: [

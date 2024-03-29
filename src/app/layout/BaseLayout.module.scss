@@ -1,5 +1,14 @@
 .app {
+    display: flex;
+    flex-direction: column;
     width: 100vw;
     height: 100vh;
     box-sizing: border-box;
+
+    .contentWrap {
+        flex: 1 1;
+        display: flex;
+        justify-content: center;
+        // align-items: center;
+    }
 }

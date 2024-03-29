@@ -6,7 +6,9 @@ function App() {
     return (
         <div className={styles.app}>
             <Header />
-            <Outlet />
+            <div className={styles.contentWrap}>
+                <Outlet />
+            </div>
         </div>
     );
 }
