@@ -1,7 +1,9 @@
 import { UserType } from '../../types/UserTypes';
 import initApp from './firebase';
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from 'firebase/auth';
-import { getDatabase, ref, get } from 'firebase/database';
+import { getDatabase, ref, get, set } from 'firebase/database';
+import { v4 as uuid } from 'uuid';
+import { ProductType } from '../../types/ProductTypes';
 
 const auth = getAuth(initApp);
 const database = getDatabase(initApp);
@@ -39,4 +41,15 @@ const adminUsers = async (user) => {
         .catch(console.error);
 };
 
-export { login, logout, onUserStateChange };
+const addNewProduct = async (product: ProductType, image: string) => {
+    const id = uuid();
+    set(ref(database, `products/${id}`), {
+        ...product,
+        id,
+        price: parseInt(product.price),
+        image,
+        option: product.option.split(','),
+    });
+};
+
+export { login, logout, onUserStateChange, addNewProduct };

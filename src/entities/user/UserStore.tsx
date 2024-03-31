@@ -6,7 +6,7 @@ interface UserStoreType {
     updateUser: (data: UserType) => void;
 }
 
-const userInfo = JSON.parse(localStorage.getItem('user') ?? '');
+const userInfo = localStorage.getItem('user') && JSON.parse(localStorage.getItem('user') ?? '');
 
 const useUserStore = create<UserStoreType>((set) => ({
     user: { displayName: userInfo?.displayName, photoURL: userInfo?.photoURL, uid: userInfo?.uid, isAdmin: userInfo?.isAdmin },
@@ -16,7 +16,5 @@ const useUserStore = create<UserStoreType>((set) => ({
         }));
     },
 }));
-
-// useUserStore.subscribe((state) => console.log('오잉', state));
 
 export default useUserStore;

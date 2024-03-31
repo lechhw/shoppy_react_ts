@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
 import styles from './NewProducts.module.scss';
 import { Button } from 'antd';
-
-interface ProductValue {
-    file: string;
-    name: string;
-    price: string;
-    category: string;
-    desc: string;
-    option: string;
-}
+import { PictureFilled } from '@ant-design/icons';
+import { UploadImage } from '../../../features/upload/Upload';
+import { addNewProduct } from '../../../features/auth/Auth';
+import { ProductType } from '../../../types/ProductTypes';
 
 const NewProducts = () => {
-    const [product, setProduct] = useState<ProductValue>({ file: '', name: '', price: '', category: '', desc: '', option: '' });
+    const [product, setProduct] = useState<ProductType>({ file: '', name: '', price: '', category: '', desc: '', option: '' });
     const [file, setFile] = useState<File>();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +24,11 @@ const NewProducts = () => {
         e.preventDefault();
         // 제품 사진을 Cloudinary에 업로드 하고 url 획득
         // Firebase에 새로운 제품 추가
-
+        if (file)
+            UploadImage(file).then((url) => {
+                console.log('*****', url);
+                addNewProduct(product, url);
+            });
         console.log('submit', file);
     };
 
@@ -69,7 +68,9 @@ const NewProducts = () => {
                         </Button>
                     </form>
                 </div>
-                <div className={styles.imgWrap}>{file && <img src={URL.createObjectURL(file)} alt="local file" />}</div>
+                <div className={styles.imgWrap}>
+                    <div className={styles.img}>{file ? <img src={URL.createObjectURL(file)} alt="local file" /> : <PictureFilled className={styles.icon} />}</div>
+                </div>
             </div>
         </section>
     );
