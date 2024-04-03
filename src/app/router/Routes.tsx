@@ -12,17 +12,14 @@ import PermissionRoute from './PermissionRoute';
 const router = createBrowserRouter([
     {
         path: '/',
-
         element: <BaseLayout />,
         errorElement: <ErrorPage />,
         children: [
             { index: true, element: <Navigate to={'/home'} /> },
-
             { path: 'home', element: <HomePage /> },
             {
                 path: 'products',
                 element: <ProductsPage />,
-                errorElement: <ErrorPage />,
                 children: [
                     { index: true, element: <AllProducts /> },
                     {

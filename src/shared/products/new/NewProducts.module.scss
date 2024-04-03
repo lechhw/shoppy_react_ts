@@ -1,60 +1,46 @@
 .container {
     width: 100%;
     padding: 20px;
+
+    .title {
+        width: 100%;
+        font-weight: 600;
+        text-align: center;
+    }
+
     .wrap {
+        position: relative;
         display: flex;
-        gap: 20px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
         width: 100%;
         height: 100%;
 
-        .title {
-            width: 100%;
-            font-weight: 600;
-            text-align: center;
-        }
-
-        .imgWrap {
+        .bg {
+            position: absolute;
+            top: 0;
+            left: 0;
             display: flex;
             justify-content: center;
-            flex: 1 0 40%;
+            align-items: center;
             width: 100%;
             height: 100%;
-            padding: 46px 10px 10px 10px;
-
-            .img {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 420px;
-                height: 420px;
-                padding: 14px;
-                border: 1px solid #ebebeb;
-                border-radius: 5px;
-                background-color: #ededed;
-
-                img {
-                    width: 100%;
-                    height: 100%;
-                }
-
-                .icon {
-                    font-size: 46px;
-                    color: #cfcfcf;
-                }
-            }
+            z-index: 5;
+            background: #fff;
+            opacity: 0.5;
         }
 
         .form {
-            flex: 1 1 50%;
-            width: 100%;
-            height: 100%;
-            padding: 46px 10px 10px 10px;
+            width: 560px;
 
             > form {
                 display: flex;
                 flex-direction: column;
+                align-items: center;
                 gap: 10px;
-                width: 80%;
+
                 padding: 6px;
 
                 .inputWrap {
@@ -86,6 +72,39 @@
                             border-color: #666666;
                         }
                     }
+                }
+
+                .upload-btn {
+                    width: 100%;
+                }
+            }
+        }
+
+        .imgWrap {
+            // display: flex;
+            // justify-content: center;
+            // width: 100%;
+            // height: 100%;
+
+            .img {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 400px;
+                height: 400px;
+                padding: 14px;
+                border: 1px solid #ebebeb;
+                border-radius: 5px;
+                background-color: #ededed;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+
+                .icon {
+                    font-size: 46px;
+                    color: #cfcfcf;
                 }
             }
         }

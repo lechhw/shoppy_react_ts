@@ -1,7 +1,7 @@
 import styles from './Header.module.scss';
 import { CiShop } from 'react-icons/ci';
 import { Link } from 'react-router-dom';
-import { login, logout, onUserStateChange } from '../../features/auth/Auth';
+import { login, logout, onUserStateChange } from '../../features/Auth';
 import useUserStore from '../../entities/user/UserStore';
 import { useEffect } from 'react';
 import User from '../../shared/user/User';
